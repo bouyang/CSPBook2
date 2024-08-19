@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Lists</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+      <h1>Book Lists</h1>
+      <nav>
+          <ul>
+              <li><a href="/" class="nav-link">Home</a></li>
+              <li><a href="/time" class="nav-link">Time App</a></li>
+          </ul>
+      </nav>
+    </header>
+
+    <% if (error) { %>
+        <p style="color: red; text-align: center;"><%= error %></p>
+    <% } %>
+
+    <div class="container">
+        <!-- PostgreSQL Books -->
+        <div class="list-container">
+            <h2>PostgreSQL Books</h2>
+            <ul>
+                <% pgBooks.forEach(book => { %>
+                    <li class="book-item">
+                        <div class="book-info">
+                            <strong><%= book.title %></strong> by <%= book.author %>
+                        </div>
+                        <div class="book-actions">
+                            <form action="/edit-postgres/<%= book.id %>" method="get" style="display:inline;">
+                                <button type="submit" class="edit-button">Edit</button>
+                            </form>
+                            <form action="/delete-postgres/<%= book.id %>" method="post" style="display:inline;">
+                                <button type="submit" class="delete-button" onclick="return confirm('Are you sure you want to delete this book?');">Delete</button>
+                            </form>
+                        </div>
+                    </li>
+                <% }); %>
+            </ul>
+
+            <h2>Add a New Book to PostgreSQL</h2>
+            <form action="/submit-postgres" method="post">
+                <label for="pgTitle">Title:</label>
+                <input type="text" id="pgTitle" name="title" required>
+                <br>
+                <label for="pgAuthor">Author:</label>
+                <input type="text" id="pgAuthor" name="author" required>
+                <br>
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+
+            <% if (editPgBook) { %>
+                <h2>Edit PostgreSQL Book</h2>
+                <form action="/update-postgres" method="post">
+                    <input type="hidden" name="id" value="<%= editPgBook.id %>">
+                    <label for="editPgTitle">Title:</label>
+                    <input type="text" id="editPgTitle" name="title" value="<%= editPgBook.title %>" required>
+                    <br>
+                    <label for="editPgAuthor">Author:</label>
+                    <input type="text" id="editPgAuthor" name="author" value="<%= editPgBook.author %>" required>
+                    <br>
+                    <button type="submit" class="submit-button">Update</button>
+                    <a href="/books" class="cancel-button">Cancel</a>
+                </form>
+            <% } %>
+        </div>
+
+        <!-- MongoDB Books -->
+        <div class="list-container">
+            <h2>MongoDB Books</h2>
+            <ul>
+                <% mongoBooks.forEach(book => { %>
+                    <li class="book-item">
+                        <div class="book-info">
+                            <strong><%= book.title %></strong> by <%= book.author %>
+                        </div>
+                        <div class="book-actions">
+                            <form action="/edit-mongodb/<%= book._id %>" method="get" style="display:inline;">
+                                <button type="submit" class="edit-button">Edit</button>
+                            </form>
+                            <form action="/delete-mongodb/<%= book._id %>" method="post" style="display:inline;">
+                                <button type="submit" class="delete-button" onclick="return confirm('Are you sure you want to delete this book?');">Delete</button>
+                            </form>
+                        </div>
+                    </li>
+                <% }); %>
+            </ul>
+
+            <h2>Add a New Book to MongoDB</h2>
+            <form action="/submit-mongodb" method="post">
+                <label for="mongoTitle">Title:</label>
+                <input type="text" id="mongoTitle" name="title" required>
+                <br>
+                <label for="mongoAuthor">Author:</label>
+                <input type="text" id="mongoAuthor" name="author" required>
+                <br>
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+
+            <% if (editMongoBook) { %>
+                <h2>Edit MongoDB Book</h2>
+                <form action="/update-mongodb" method="post">
+                    <input type="hidden" name="id" value="<%= editMongoBook._id %>">
+                    <label for="editMongoTitle">Title:</label>
+                    <input type="text" id="editMongoTitle" name="title" value="<%= editMongoBook.title %>" required>
+                    <br>
+                    <label for="editMongoAuthor">Author:</label>
+                    <input type="text" id="editMongoAuthor" name="author" value="<%= editMongoBook.author %>" required>
+                    <br>
+                    <button type="submit" class="submit-button">Update</button>
+                    <a href="/books" class="cancel-button">Cancel</a>
+                </form>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

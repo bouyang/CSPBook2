@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Time</title>
+    <link rel="stylesheet" href="/styles-time.css">
+</head>
+<body>
+    <header>
+      <h1>Time App</h1>
+      <nav>
+          <ul>
+              <li><a href="/" class="nav-link">Home</a></li>
+              <li><a href="/books" class="nav-link">Books App</a></li>
+          </ul>
+      </nav>
+    </header>
+    <div class="time-container">
+        <h1>Current Time</h1>
+        <p id="time"><%= time %></p>
+    </div>
+</body>
+
+<script>
+  function updateTime() {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+      const timeString = `${hours}:${minutes}:${seconds}`;
+      document.getElementById('time').textContent = timeString;
+  }
+
+  // Update the time every second
+  setInterval(updateTime, 1000);
+
+  // Initial update
+  updateTime();
+</script>
+
+</html>
